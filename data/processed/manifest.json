@@ -1,0 +1,118 @@
+{
+  "frozen_utc": "2026-10-24T22:32:43+00:00",
+  "source": "rq1/data/{name}_three_zero_shot_label.csv, Zenodo 10.5281/zenodo.17148849 (cc-by-4.0)",
+  "classes": [
+    "bug report",
+    "feature request",
+    "other"
+  ],
+  "metric": "per-class one-vs-rest P/R/F1 on one-hot gold, macro-averaged (reference metric, verified vs paper Table 2)",
+  "prompts_sha256": "82e7d841f673d5d0e048956249642cdac5d7edd1e5b6ad8322f61888d7f03d4c",
+  "definitions_verified_against_notebook": true,
+  "datasets": {
+    "DS1": {
+      "source_file": "guzman_three_zero_shot_label.csv",
+      "source_sha256": "f863c668d860b192b2abb69263211e3c49ce624e2c49b008baccd40c91e6b7e2",
+      "eval_sha256": "7be486ba8ad041352fe3c2f97860bd9a3f7325695a1c63f874c31e42a470413b",
+      "reference_predictions_sha256": "c58acc87e39da61f3e2a31211535611e29d47b3404918c9ac7ced0d31c339782",
+      "n": 2792,
+      "multilabel_gold": 350,
+      "label_dist": {
+        "bug report": 779,
+        "feature request": 245,
+        "other": 1418,
+        "bug report|other": 192,
+        "feature request|other": 144,
+        "bug report|feature request": 7,
+        "bug report|feature request|other": 7
+      },
+      "dup_text_rows": 0,
+      "construction": "orig rows with >=1 label in {bug report, user request, praise, usage scenario} (2,792 rows); user request->feature request; praise/usage scenario and co-occurring complaint/feature strength/feature shortcoming/noise->other",
+      "reference_macroF1_three": {
+        "gpt3": 84.6,
+        "gpt4": 83.6,
+        "t5": 82.8,
+        "llama3": 81.3
+      }
+    },
+    "DS2": {
+      "source_file": "maalej_three_zero_shot_label.csv",
+      "source_sha256": "9c69330b9d79fd1d3ec639a2e27a927adcb6b19bed0e090d659d523d21aaece9",
+      "eval_sha256": "0b16a7b097824ab6e879b8388bd695fa8fb5967dc57def427a01febe57b00f5e",
+      "reference_predictions_sha256": "3ac2562203909cca758c7525badd4541e268768452da64dc9f2fabb2756b53af",
+      "n": 1216,
+      "multilabel_gold": 52,
+      "label_dist": {
+        "other": 905,
+        "feature request|other": 32,
+        "bug report|other": 19,
+        "feature request": 145,
+        "bug report": 114,
+        "bug report|feature request": 1
+      },
+      "dup_text_rows": 0,
+      "construction": "undocumented subset of 1,216 of the 2,725 orig rows (not category-based, not DS3-overlap: 23 orig texts overlap DS3); taken as published; user experience/rating->other",
+      "reference_macroF1_three": {
+        "gpt3": 55.5,
+        "gpt4": 54.3,
+        "t5": 54.7,
+        "llama3": 52.7
+      }
+    },
+    "DS3": {
+      "source_file": "jha_three_zero_shot_label.csv",
+      "source_sha256": "5f0ecad730cfb3c56f0cd8efe7f1ed16a5455204390a2d66f81f27596379f68d",
+      "eval_sha256": "3459df53370e23f83ef0a91fa4f14ebd80b4265bfb91dd8bc5c56307362b2d3d",
+      "reference_predictions_sha256": "83f56fdbcd63c80f119b99a05f103d98f8c839410788037489cb2cd4e2493fe9",
+      "n": 3214,
+      "multilabel_gold": 18,
+      "label_dist": {
+        "bug report": 1593,
+        "other": 798,
+        "feature request": 805,
+        "bug report|other": 10,
+        "bug report|feature request": 2,
+        "feature request|other": 6
+      },
+      "dup_text_rows": 0,
+      "construction": "identical rows to orig (already 3-class)",
+      "reference_macroF1_three": {
+        "gpt3": 78.7,
+        "gpt4": 79.6,
+        "t5": 76.0,
+        "llama3": 78.8
+      }
+    },
+    "DS4": {
+      "source_file": "scalabrino_three_zero_shot_label.csv",
+      "source_sha256": "57581feb3f6e0860eb7046e11a86017bb6edd08dd5cf15a2b7567beeb7803b3e",
+      "eval_sha256": "a572bd42e2fee103094bf03bca2c0e123f1b6bfa5385d10e65e1e9429bf2e768",
+      "reference_predictions_sha256": "822ea9a4e1769493fd8a9c1f1ed4fbc52256995600aedfbc8cc8db6a63174198",
+      "n": 3081,
+      "multilabel_gold": 2,
+      "label_dist": {
+        "bug report": 1235,
+        "other": 1355,
+        "feature request": 489,
+        "bug report|feature request": 2
+      },
+      "dup_text_rows": 0,
+      "construction": "orig minus performance/energy/usability/security rows, plus 640 bug/feature reviews absent from orig; taken as published",
+      "reference_macroF1_three": {
+        "gpt3": 86.6,
+        "gpt4": 87.6,
+        "t5": 79.3,
+        "llama3": 85.8
+      }
+    }
+  },
+  "amendments": [],
+  "cross_dataset_overlap_texts": {
+    "DS1∩DS2": 7,
+    "DS1∩DS3": 0,
+    "DS1∩DS4": 0,
+    "DS2∩DS3": 15,
+    "DS2∩DS4": 1,
+    "DS3∩DS4": 0
+  }
+}

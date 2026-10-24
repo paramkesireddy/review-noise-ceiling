@@ -1,0 +1,34 @@
+{
+  "P1": {
+    "name": "reference_verbatim",
+    "system": "I will provide you with a textual user review of an Android app, aiming to categorize the reviews into specific intention classes:\nbug report: report a problem, such as faulty behavior of the application. describe problems with the app which should be corrected, such as a crash, an erroneous behavior, or a performance issue.\nfeature request: ask for a missing feature, functionality or content, as well as reviews that ask for the improvement of an existing feature.\nother: users express general appreciation with the application. It focuses on general judgment. They are simple text reflections of the numeric star rating. Ratings are less informative as they only include praise, dispraise, a distractive critique, or a dissuasion. Reviews where users describe workarounds, use cases and scenarios involving the app",
+    "user": "'Does the author's intention in this app review relate to a bug report or feature request or other?\nreview: {text}'\nintention: '",
+    "note": "byte-identical to Abedini & Heydarnoori 2025 notebook incl. stray quote; temperature 0"
+  },
+  "P2": {
+    "name": "clean_same_definitions",
+    "system": "You classify user reviews of a mobile app into exactly one intention class. Classes:\nbug report: report a problem, such as faulty behavior of the application. describe problems with the app which should be corrected, such as a crash, an erroneous behavior, or a performance issue.\nfeature request: ask for a missing feature, functionality or content, as well as reviews that ask for the improvement of an existing feature.\nother: users express general appreciation with the application. It focuses on general judgment. They are simple text reflections of the numeric star rating. Ratings are less informative as they only include praise, dispraise, a distractive critique, or a dissuasion. Reviews where users describe workarounds, use cases and scenarios involving the app",
+    "user": "Review: {text}\n\nWhich class does the author's intention belong to: bug report, feature request, or other?\nAnswer with only the class name.\nIntention:"
+  },
+  "P3": {
+    "name": "reworded_same_definitions",
+    "system": "Task: read an app review and decide what the user is trying to communicate. Possible answers and what they mean:\nbug report: report a problem, such as faulty behavior of the application. describe problems with the app which should be corrected, such as a crash, an erroneous behavior, or a performance issue.\nfeature request: ask for a missing feature, functionality or content, as well as reviews that ask for the improvement of an existing feature.\nother: users express general appreciation with the application. It focuses on general judgment. They are simple text reflections of the numeric star rating. Ratings are less informative as they only include praise, dispraise, a distractive critique, or a dissuasion. Reviews where users describe workarounds, use cases and scenarios involving the app",
+    "user": "Here is the review:\n\"\"\"{text}\"\"\"\n\nRespond with one of: bug report / feature request / other. Output the label and nothing else.\nLabel:"
+  },
+  "definitions": {
+    "bug report": "report a problem, such as faulty behavior of the application. describe problems with the app which should be corrected, such as a crash, an erroneous behavior, or a performance issue.",
+    "feature request": "ask for a missing feature, functionality or content, as well as reviews that ask for the improvement of an existing feature.",
+    "other": "users express general appreciation with the application. It focuses on general judgment. They are simple text reflections of the numeric star rating. Ratings are less informative as they only include praise, dispraise, a distractive critique, or a dissuasion. Reviews where users describe workarounds, use cases and scenarios involving the app"
+  },
+  "classes": [
+    "bug report",
+    "feature request",
+    "other"
+  ],
+  "verbalizers": {
+    "bug report": "bug report",
+    "feature request": "feature request",
+    "other": "other"
+  },
+  "reference_parser": "get_class: lowercase, collapse whitespace, substring-match each class name; none matched -> other"
+}
