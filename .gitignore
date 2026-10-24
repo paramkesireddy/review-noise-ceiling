@@ -1,0 +1,11 @@
+# regenerable or large
+data/raw/
+*.partial.jsonl
+checkpoints/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+# never
+.env
+*.token
