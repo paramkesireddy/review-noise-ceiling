@@ -1,0 +1,90 @@
+{
+  "per_class": [
+    {
+      "variant": "mask",
+      "class": "bug report",
+      "P": 90.51321928460342,
+      "R": 94.0986257073565,
+      "F1": 92.27110582639715,
+      "n_pos": 1237
+    },
+    {
+      "variant": "mask",
+      "class": "feature request",
+      "P": 63.1184407796102,
+      "R": 85.74338085539715,
+      "F1": 72.71157167530224,
+      "n_pos": 491
+    },
+    {
+      "variant": "mask",
+      "class": "other",
+      "P": 94.96459480723838,
+      "R": 89.07749077490776,
+      "F1": 91.92688499619193,
+      "n_pos": 1355
+    },
+    {
+      "variant": "nomask",
+      "class": "bug report",
+      "P": 91.85483870967742,
+      "R": 92.07760711398545,
+      "F1": 91.96608800968914,
+      "n_pos": 1237
+    },
+    {
+      "variant": "nomask",
+      "class": "feature request",
+      "P": 56.475300400534046,
+      "R": 86.15071283095723,
+      "F1": 68.2258064516129,
+      "n_pos": 491
+    },
+    {
+      "variant": "nomask",
+      "class": "other",
+      "P": 93.81362568519968,
+      "R": 88.41328413284133,
+      "F1": 91.03343465045593,
+      "n_pos": 1355
+    }
+  ],
+  "macro_ovr": {
+    "mask": {
+      "P": 82.865418290484,
+      "R": 89.63983244588714,
+      "F1": 85.63652083263044
+    },
+    "nomask": {
+      "P": 80.71458826513704,
+      "R": 88.88053469259467,
+      "F1": 83.74177637058598
+    }
+  },
+  "macroF1_argmax_single_label": 87.43638595280714,
+  "per_class_F1_argmax": {
+    "bug report": 93.15726290516207,
+    "feature request": 76.85009487666034,
+    "other": 92.30180007659901
+  },
+  "run_id": "distilbert__DS4__seed2",
+  "dataset": "DS4",
+  "seed": 2,
+  "n": 3081,
+  "config": {
+    "model": "distilbert-base-uncased",
+    "max_length": 50,
+    "batch": 16,
+    "lr": 5e-05,
+    "epochs": 3,
+    "folds": 5,
+    "kfold_seed": 1234,
+    "eval_batch": 256,
+    "dtype": "fp32"
+  },
+  "wall_s": 162.9,
+  "git_commit": "7193abb",
+  "finished_utc": "2026-10-24T23:08:39+00:00",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.11.0+cu130"
+}

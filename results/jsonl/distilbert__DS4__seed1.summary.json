@@ -1,0 +1,90 @@
+{
+  "per_class": [
+    {
+      "variant": "mask",
+      "class": "bug report",
+      "P": 91.24315871774824,
+      "R": 94.34114793856104,
+      "F1": 92.76629570747218,
+      "n_pos": 1237
+    },
+    {
+      "variant": "mask",
+      "class": "feature request",
+      "P": 71.10694183864915,
+      "R": 77.18940936863544,
+      "F1": 74.0234375,
+      "n_pos": 491
+    },
+    {
+      "variant": "mask",
+      "class": "other",
+      "P": 93.84141647421093,
+      "R": 89.96309963099631,
+      "F1": 91.8613413715147,
+      "n_pos": 1355
+    },
+    {
+      "variant": "nomask",
+      "class": "bug report",
+      "P": 92.29534510433388,
+      "R": 92.96685529506871,
+      "F1": 92.62988320579943,
+      "n_pos": 1237
+    },
+    {
+      "variant": "nomask",
+      "class": "feature request",
+      "P": 61.99021207177814,
+      "R": 77.39307535641548,
+      "F1": 68.84057971014492,
+      "n_pos": 491
+    },
+    {
+      "variant": "nomask",
+      "class": "other",
+      "P": 91.904047976012,
+      "R": 90.47970479704797,
+      "F1": 91.18631461509855,
+      "n_pos": 1355
+    }
+  ],
+  "macro_ovr": {
+    "mask": {
+      "P": 85.39717234353611,
+      "R": 87.16455231273092,
+      "F1": 86.21702485966229
+    },
+    "nomask": {
+      "P": 82.06320171737467,
+      "R": 86.94654514951073,
+      "F1": 84.21892584368096
+    }
+  },
+  "macroF1_argmax_single_label": 87.43923250067631,
+  "per_class_F1_argmax": {
+    "bug report": 92.9678188319428,
+    "feature request": 76.76560900716478,
+    "other": 92.58426966292134
+  },
+  "run_id": "distilbert__DS4__seed1",
+  "dataset": "DS4",
+  "seed": 1,
+  "n": 3081,
+  "config": {
+    "model": "distilbert-base-uncased",
+    "max_length": 50,
+    "batch": 16,
+    "lr": 5e-05,
+    "epochs": 3,
+    "folds": 5,
+    "kfold_seed": 1234,
+    "eval_batch": 256,
+    "dtype": "fp32"
+  },
+  "wall_s": 162.6,
+  "git_commit": "7193abb",
+  "finished_utc": "2026-10-24T23:05:54+00:00",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.11.0+cu130"
+}
