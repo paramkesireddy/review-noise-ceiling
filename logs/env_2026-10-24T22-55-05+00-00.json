@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-10-24T22:55:05+00:00",
+  "python": "3.13.16",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+  "cpu_count": 12,
+  "ram_gb": 179.4,
+  "gpu": "NVIDIA A100-SXM4-80GB, 81920 MiB, 580.82.07",
+  "cuda_available": true,
+  "torch": "2.11.0+cu130",
+  "hf_home": "/content/hf_cache",
+  "git_commit": "5030bd6"
+}
