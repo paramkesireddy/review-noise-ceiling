@@ -1,0 +1,20 @@
+{
+  "run_id": "DS3__qwen3-4b__P2__G__bf16",
+  "dataset": "DS3",
+  "model": "qwen3-4b",
+  "hf": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "prompt": "P2",
+  "mode": "G",
+  "prefill": "",
+  "precision": "bf16",
+  "batch": 64,
+  "n": 3214,
+  "max_new_tokens": 48,
+  "decoding": "greedy",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.11.0+cu130",
+  "git_commit": "acbe829",
+  "wall_s_last_session": 58.0,
+  "finished_utc": "2026-10-24T23:28:47+00:00"
+}

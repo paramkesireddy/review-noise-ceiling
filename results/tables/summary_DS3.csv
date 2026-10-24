@@ -1,0 +1,6 @@
+n,macroF1_strict,ci_lo,ci_hi,F1_bug,F1_feat,F1_other,gpt4o_same_rows,ratio_vs_gpt4o,ratio_ci_lo,ratio_ci_hi,kappa_vs_gpt4o,mcnemar_p,better_worse,acc_strict,macroF1_refparser,run,model,prompt,mode,invalid_pct,multi_pct,label_mass_med,ms_per_review
+3214,79.41,77.92,80.82,86.77,75.97,75.49,79.55,0.9982,0.9831,1.0135,0.8228,0.911,159/162,81.52,79.41,DS3__qwen3-4b__P2__G__bf16,qwen3-4b,P2,G,0.0,0.0,,17.5
+3214,79.64,78.16,81.04,86.94,76.34,75.65,79.55,1.0011,0.986,1.0164,0.8248,0.866,160/156,81.74,79.64,DS3__qwen3-4b__P2__S__bf16,qwen3-4b,P2,S,0.0,0.0,1.0,42.7
+3214,79.73,78.22,81.24,86.74,77.81,74.63,79.55,1.0022,0.9808,1.0214,0.6921,0.762,272/264,81.86,78.25,distilbert__DS3__seed1,distilbert,-,argmax|ovr,0.0,0.0,,
+3214,79.86,78.46,81.36,87.02,77.15,75.42,79.55,1.0039,0.9843,1.0244,0.6985,0.632,270/258,81.99,79.18,distilbert__DS3__seed2,distilbert,-,argmax|ovr,0.0,0.0,,
+3214,79.68,78.2,81.12,87.76,76.71,74.58,79.55,1.0016,0.9806,1.0212,0.6845,0.58,283/269,82.05,78.44,distilbert__DS3__seed3,distilbert,-,argmax|ovr,0.0,0.0,,
