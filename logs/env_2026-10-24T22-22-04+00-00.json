@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-10-24T22:22:04+00:00",
+  "python": "3.13.16",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+  "cpu_count": 2,
+  "ram_gb": 13.6,
+  "gpu": "/bin/sh: 1: nvidia-smi: not found",
+  "cuda_available": false,
+  "torch": "2.11.0+cpu",
+  "hf_home": "/content/drive/MyDrive/rnc/hf_cache"
+}
