@@ -192,3 +192,45 @@ def adjudicate(sample: pd.DataFrame, qa: pd.DataFrame, qb: pd.DataFrame, reconci
     out["status"] = [assign_status(g, la, lb, ma, mb, r) for g, la, lb, ma, mb, r in
                      zip(out.gold, out.label_A, out.label_B, out.multi_A, out.multi_B, out.reconciled_label.fillna(""))]
     return out.reset_index()
+
+
+# ----------------------------------------------------------------------------- returned queues: validation and agreement
+def validate_queue(returned_csv: Path, queue_csv: Path, allow_blank: int = 0) -> dict:
+    """Check a returned annotation file against the issued queue: same keys, labels in the class set, no silent edits."""
+    q = pd.read_csv(queue_csv); r = pd.read_csv(returned_csv)
+    problems = []
+    if set(q.item_key) != set(r.item_key):
+        problems.append(f"item_key mismatch: missing {len(set(q.item_key) - set(r.item_key))}, extra {len(set(r.item_key) - set(q.item_key))}")
+    if "label" not in r.columns:
+        problems.append("no label column")
+    else:
+        lab = r.label.fillna("").astype(str).str.strip().str.lower()
+        bad = sorted(set(lab[~lab.isin(core.CLASSES + [""])]))
+        blanks = int((lab == "").sum())
+        if bad:
+            problems.append(f"labels outside the class set: {bad}")
+        if blanks > allow_blank:
+            problems.append(f"{blanks} blank labels")
+    if "multi_intent" in r.columns:
+        mi = r.multi_intent.fillna("").astype(str).str.strip()
+        badmi = sorted(set(mi[~mi.isin(["", "1", "1.0", "0", "0.0"])]))
+        if badmi:
+            problems.append(f"multi_intent values other than 1/blank: {badmi}")
+    merged = q[["item_key", "text"]].merge(r[["item_key", "text"]], on="item_key", suffixes=("_q", "_r"), how="inner")
+    edited = int((merged.text_q.astype(str) != merged.text_r.astype(str)).sum())
+    if edited:
+        problems.append(f"{edited} review texts differ from the issued queue (edited or re-encoded)")
+    dist = r.label.fillna("").astype(str).str.strip().str.lower().value_counts().to_dict() if "label" in r.columns else {}
+    return {"ok": not problems, "problems": problems, "n": len(r), "label_distribution": dist}
+
+
+def agreement(a: pd.DataFrame, b: pd.DataFrame, key: str = "item_key") -> dict:
+    """Cohen's kappa and percent agreement between two returned queues; lists disagreements (key, A, B)."""
+    from sklearn.metrics import cohen_kappa_score
+
+    m = a[[key, "label"]].merge(b[[key, "label"]], on=key, suffixes=("_A", "_B"))
+    la = m.label_A.astype(str).str.strip().str.lower(); lb = m.label_B.astype(str).str.strip().str.lower()
+    dis = m[la.values != lb.values]
+    return {"n": len(m), "percent_agreement": round(100 * float((la.values == lb.values).mean()), 1),
+            "kappa": round(float(cohen_kappa_score(la, lb)), 3), "n_disagree": len(dis),
+            "disagreements": dis.rename(columns={"label_A": "A", "label_B": "B"}).to_dict("records")}
