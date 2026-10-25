@@ -1,0 +1,25 @@
+{
+  "generated_utc": "2026-10-25T03:14:05+00:00",
+  "git_commit": "480199b",
+  "sections": {
+    "perf": true,
+    "convergence": true,
+    "artifacts": true,
+    "transfer": true,
+    "contamination": true,
+    "noise_DS3": false,
+    "noise_DS4": false
+  },
+  "tables": {
+    "artifact_decomposition.csv": "920b85d1a55447fb77bbd72b3ef7804118ae5e45dfe81c5555697f1a830bf8a7",
+    "contamination.csv": "07fb51d786a643d38a5bea3f06d82ead16fd2469a0025d9df98c31e560283641",
+    "distilbert_cv_summary.csv": "a6cf98277d8a4aeb16e6f195b355b4120af19cb3015ae787d82a64a0fb757764",
+    "error_overlap.csv": "4f32e23f994d7fc89cb6b57781947ef02d15c29396ed7baf3c1252560b4eb41d",
+    "strata_sizes.csv": "0a92e4b5d8579f4b0cbe3c4a983b5d6e4356a57a61bffbfd490801a58767a57c",
+    "summary_DS3.csv": "556e395d45c8544d4cc53eb60fd0bbbb9c4e15dda5834c5a9cd5e8580fa4eab8",
+    "summary_DS4.csv": "43a9579465576319f541d363598fb3ca67a901b53026875a29b6dea7039572cf",
+    "systems_DS3.csv": "5fccd051d40f317aa723867a58cdbb871dd25412490f615dca54e9575c331599",
+    "systems_DS4.csv": "23f346943b2f07c8ff118ecdd53b464f2ae4743461ee8f2e0171097a3279ee4e",
+    "transfer_summary.csv": "973c98515316d1cc2ffc25e80aa239be86216a7b8157ecd35c51374545bef9af"
+  }
+}
