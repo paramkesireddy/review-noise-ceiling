@@ -1,0 +1,62 @@
+{
+  "per_class": [
+    {
+      "variant": "mask",
+      "class": "bug report",
+      "P": 79.5031055900621,
+      "R": 87.72585669781931,
+      "F1": 83.41232227488152,
+      "n_pos": 1605
+    },
+    {
+      "variant": "mask",
+      "class": "feature request",
+      "P": 61.124121779859486,
+      "R": 64.20664206642066,
+      "F1": 62.62747450509898,
+      "n_pos": 813
+    },
+    {
+      "variant": "mask",
+      "class": "other",
+      "P": 54.212860310421284,
+      "R": 60.073710073710075,
+      "F1": 56.993006993006986,
+      "n_pos": 814
+    }
+  ],
+  "macro_ovr": {
+    "mask": {
+      "P": 64.94669589344763,
+      "R": 70.66873627931669,
+      "F1": 67.67760125766249
+    }
+  },
+  "macroF1_argmax_single_label": 65.99297979630869,
+  "per_class_F1_argmax": {
+    "bug report": 82.28915662650603,
+    "feature request": 56.986301369863014,
+    "other": 58.70348139255702
+  },
+  "run_id": "distilbert_transfer__DS4_to_DS3__seed1",
+  "train": "DS4",
+  "test": "DS3",
+  "seed": 1,
+  "n": 3214,
+  "config": {
+    "model": "distilbert-base-uncased",
+    "max_length": 50,
+    "batch": 16,
+    "lr": 5e-05,
+    "epochs": 3,
+    "folds": 5,
+    "kfold_seed": 1234,
+    "eval_batch": 256,
+    "dtype": "fp32"
+  },
+  "wall_s": 41.3,
+  "git_commit": "a10cc1a",
+  "finished_utc": "2026-10-25T02:41:32+00:00",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.11.0+cu130"
+}
