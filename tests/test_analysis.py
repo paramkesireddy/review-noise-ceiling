@@ -56,10 +56,27 @@ def test_noise_ceiling_recovers_planted_errors(tmp_path):
     assert hi["estimate"] >= lo["estimate"] and 0 < out["ceiling"]["ceiling"] < 100
     assert abs(out["ceiling_multilabel_only"]["ceiling"] - 100) < 1e-9          # no multi-label gold in this world
     for f, v in out["systems"].items():                                          # systems see the truth -> errors sit on wrong gold
-        assert v["RR"] > 1.5 and v["F1_vs_adjudicated_weighted"] > v["F1_vs_gold_weighted"], (f, v)
-    assert out["agreement"]["kappa"] > 0.8
-    assert (tb / "noise_ceiling_DSX.json").exists() and len(pd.read_csv(tb / "noise_ceiling_DSX.csv")) > 10
+        assert v["RR"] > 1.5 and v["RR_wrong_only"] > 1.5 and v["F1_vs_adjudicated_weighted"] > v["F1_vs_gold_weighted"], (f, v)
+        assert v["H4"] in {"supported", "enriched, below threshold", "not supported"} and 0 <= v["fisher_p_holm"] <= 1
+        assert v["fisher_p_holm"] >= v["fisher_p"] and 0 < v["F1_population"] < 100
+    assert out["H3"]["verdict"] in {"supported", "refuted", "indeterminate"} and out["H3"]["pre_registered_for"] == "DS3"
+    assert out["agreement"]["before_reconciliation"]["kappa"] > 0.8 and "after_reconciliation" not in out["agreement"]
+    # reconciliation file resolving every disagreement -> contested only where both flag multi-intent (none here) -> kappa 1 after
+    dis = pd.DataFrame(noise.agreement(pd.read_csv(ann / "annotator_A.csv"), pd.read_csv(ann / "annotator_B.csv"))["disagreements"])
+    pd.DataFrame(dict(item_key=dis.item_key, reconciled_label=dis.A)).to_csv(ann / "reconciled.csv", index=False)
+    ext = pd.read_csv(ann / "annotator_A.csv").head(40); ext.to_csv(ann / "annotator_external.csv", index=False)
+    out2 = analysis.noise_ceiling("DSX", proc, jl, ann, tb, B=100)
+    assert out2["agreement"]["after_reconciliation"]["kappa"] == 1.0 and out2["status_counts"].get("contested", 0) == 0
+    assert out2["agreement"]["external"]["n"] == 40 and out2["agreement"]["external"]["vs_A"]["kappa"] == 1.0
+    assert out2["epsilon_confirmed"]["estimate"] >= out["epsilon_confirmed"]["estimate"]   # resolved items can only add gold errors
+    csv = pd.read_csv(tb / "noise_ceiling_DSX.csv")
+    assert (tb / "noise_ceiling_DSX.json").exists() and len(csv) > 15 and "verdict" in csv.columns
     assert analysis.noise_ceiling("DSX", proc, jl, tmp_path / "nowhere", tb) is None
+
+
+def test_holm_and_transfer_verdict(tmp_path):
+    assert analysis.holm([0.01, 0.04, 0.03]) == [0.03, 0.06, 0.06]   # step-down: 3x0.01, then max(2x0.03, 1x0.04) carried up
+    assert analysis.holm([0.5, 0.0001]) == [0.5, 0.0002]
 
 
 def test_artifact_decomposition_arithmetic(tmp_path):
@@ -100,4 +117,6 @@ def test_contamination_and_transfer_tables(tmp_path):
     (jl / "distilbert__DSX__seed1.summary.json").write_text(json.dumps(dict(seed=1, macroF1_argmax_single_label=90.0, macro_ovr=dict(mask=dict(F1=89.0), nomask=dict(F1=88.0)))))
     tt = analysis.transfer_summary(proc, jl, tb, pairs=(("DSX", "DSX"),), seeds=[1], B=50)
     assert len(tt) == 1 and tt.indomain_argmax.iloc[0] == 90.0 and abs(tt.drop_argmax.iloc[0] - (90.0 - tt.transfer_argmax.iloc[0])) < 1e-6
+    agg = pd.read_csv(tb / "transfer_agg.csv")
+    assert len(agg) == 1 and agg.H5.iloc[0].startswith("met" if agg.drop_mean.iloc[0] >= 10 else "not met")
     assert analysis.transfer_summary(proc, jl, tb, pairs=(("DSX", "DSZ"),), seeds=[1]) is None
