@@ -1,0 +1,14 @@
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{DS3 ($n$=\nDSthree)} & \multicolumn{2}{c}{DS4 ($n$=\nDSfour)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+System & macro-F1 [95\% CI] & $\kappa$ & macro-F1 [95\% CI] & $\kappa$ \\
+\midrule
+GPT-4o (reference outputs, reference parser) & 79.6 [78.1, 81.0] & -- & 87.6 [86.4, 88.9] & -- \\
+Qwen3-4B, P2, greedy, strict parser & 79.4 [77.9, 80.8] & 0.82 & 87.5 [86.1, 88.8] & 0.90 \\
+Qwen3-1.7B, P2, greedy, strict parser & 68.8 [67.2, 70.5] & 0.60 & 79.6 [77.9, 81.3] & 0.76 \\
+DistilBERT, single-label argmax (3 seeds) & 79.8 $\pm$ 0.1 & 0.69 & 87.2 $\pm$ 0.4 & 0.82 \\
+DistilBERT, one-vs-rest with attention mask (reference recipe) & 78.6 $\pm$ 0.5 & -- & 85.8 $\pm$ 0.4 & -- \\
+DistilBERT, one-vs-rest without attention mask & 75.9 $\pm$ 1.5 & -- & 84.1 $\pm$ 0.3 & -- \\
+\bottomrule
+\end{tabular}

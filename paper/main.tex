@@ -1,0 +1,151 @@
+%% ACMSE 2027 short paper — double-anonymous submission.
+%% Build: python paper/make_tables.py && latexmk -pdf -cd paper/main.tex   (every number comes from numbers.tex / tables/*.tex)
+\documentclass[sigconf,anonymous,review]{acmart}
+\usepackage{booktabs}
+\usepackage{xspace}
+\input{numbers}
+
+\copyrightyear{2027}
+\acmYear{2027}
+\setcopyright{acmlicensed}
+\acmConference[ACMSE 2027]{2027 ACM Southeast Conference}{April 15--17, 2027}{Decatur, AL, USA}
+\acmBooktitle{2027 ACM Southeast Conference (ACMSE 2027), April 15--17, 2027, Decatur, AL, USA}
+\acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\acmISBN{979-8-4007-2749-8/27/04}
+
+\newcommand{\fone}{macro-F1\xspace}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+\title{How Much of the LLM Advantage Is Measurement? Noise Ceilings and Evaluation Artifacts in App-Review Intent Classification}
+
+\author{Anonymous Author(s)}
+\affiliation{\institution{Anonymous Institution}\city{}\country{}}
+
+\begin{abstract}
+Recent studies report that large language models (LLMs) outperform fine-tuned encoders at sorting app-store reviews into bug reports, feature requests and other feedback. We ask how much of that advantage is measurement. On two public benchmarks ($n$ = \nDSthree{} and \nDSfour) we re-implement the reference pipeline, hold the metric, prompt and output parser fixed, and pre-register five hypotheses before drawing an annotation sample. Four measurement choices---output parser, prompt wording, decision rule and metric view---each move \fone by \artMin--\artMax{} points, while GPT-4o leads a 4B-parameter open-weight model by \gapQfourDSthree{} and \gapQfourDSfour{} points and a fine-tuned DistilBERT by \gapDbDSthree{} and \gapDbDSfour. The three systems' errors overlap far beyond chance (Jaccard \jMinDSfour--\jMaxDSthree{} against \jNullDSfour--\jNullDSthree{} under independence), consistent with a shared ceiling set by the labels rather than by the models. A blind, stratified re-annotation estimates the gold-label error rate at \epsDSthree\% on DS3 and the noise ceiling at \ceilingDSthree{} \fone. The one advantage that survives is under distribution shift: trained on the other benchmark, the encoder lands \belowGptDSthreeToDSfour--\belowGptDSfourToDSthree{} points below the zero-shot models. Code, frozen data, pre-registration and annotations are released.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept><concept_id>10011007.10011074.10011099</concept_id><concept_desc>Software and its engineering~Software verification and validation</concept_desc><concept_significance>300</concept_significance></concept>
+<concept><concept_id>10010147.10010178.10010179</concept_id><concept_desc>Computing methodologies~Natural language processing</concept_desc><concept_significance>500</concept_significance></concept>
+<concept><concept_id>10002944.10011122.10002945</concept_id><concept_desc>General and reference~Evaluation</concept_desc><concept_significance>500</concept_significance></concept>
+</ccs2012>
+\end{CCSXML}
+\ccsdesc[500]{Computing methodologies~Natural language processing}
+\ccsdesc[500]{General and reference~Evaluation}
+\ccsdesc[300]{Software and its engineering~Software verification and validation}
+
+\keywords{app store reviews, requirements classification, label noise, evaluation methodology, large language models, pre-registration}
+
+\maketitle
+
+\section{Introduction}
+
+Classifying app-store reviews by intent---\emph{bug report}, \emph{feature request}, or \emph{other}---is one of the oldest supervised tasks in app-store analysis~\cite{guzman2015,maalej2016,jha2018,scalabrino2019}. It is also a natural test bed for the claim that general-purpose LLMs now beat task-specific models: a recent study evaluates GPT-4o, GPT-3.5, Llama~3 and Flan-T5 zero-shot on four public datasets and reports that they outperform a fine-tuned DistilBERT by wide margins~\cite{abedini2025}, and a follow-up finds small open-weight models competitive with the proprietary ones~\cite{mallya2025}.
+
+Such comparisons bundle several measurement decisions---which label scheme is scored, how free-text output is parsed into a label, which prompt is used, whether the label is generated or scored, and whether a one-vs-rest or a single-label view of the metric is taken---and they treat the benchmark labels as ground truth. Both bundles matter. If the measurement decisions move scores by more than the models differ, the ranking is an artifact of the pipeline. If the labels carry errors, every system faces the same ceiling, and systems that approach it will \emph{converge}: they will score alike and err on the same items, however different they are inside. Neither possibility has been quantified for this task.
+
+We quantify both, with a pre-registered design. We re-implement the reference pipeline from its replication package, recover its metric to within 0.1 point, and evaluate three systems under one metric, one prompt and one parser: the reference study's GPT-4o outputs, a 4B- and a 1.7B-parameter open-weight model (Qwen3) run locally, and a DistilBERT baseline trained with the reference recipe. We then decompose four measurement choices into \fone swings, test whether the systems' errors overlap more than independent errors would, re-annotate a stratified sample of \nDSthree{}+\nDSfour{} items blind to gold and model output to estimate the label-error rate and the resulting ceiling, attribute each system's errors to label quality, and test the comparison under cross-dataset shift. Hypotheses, decision rules, strata, seeds and estimators were frozen in a tagged pre-registration before the annotation sample was drawn; deviations are logged as dated amendments.
+
+The answer is that most of the advantage is measurement. Under a fixed pipeline, GPT-4o leads the 4B model by \gapQfourDSthree{} and \gapQfourDSfour{} \fone points and the fine-tuned encoder by \gapDbDSthree{} and \gapDbDSfour{} (DS3 and DS4), inside the 2-point band we pre-declared as practically negligible. Each measurement choice moves a single system by \artMin--\artMax{} points. The three systems share errors at \jMinDSfour--\jMaxDSthree{} Jaccard against \jNullDSfour--\jNullDSthree{} under independence, and the re-annotation finds a gold-label error rate of \epsDSthree\% on DS3, placing the ceiling at \ceilingDSthree{} \fone. The 1.7B model's gap (\gapQseventeenDSthree{} and \gapQseventeenDSfour{} points) is real, and so is the gap that opens under shift: trained on the other benchmark, DistilBERT drops \dropDSthreeToDSfour{} and \dropDSfourToDSthree{} points and lands below every zero-shot system. We release the code, the frozen data and predictions, the pre-registration and the annotations.
+
+\section{Background and Related Work}
+
+\paragraph{Datasets and the reference study.} We use the two largest of the four benchmarks in the reference study~\cite{abedini2025}: DS3, reviews labelled by Jha and Mahmoud~\cite{jha2018} ($n$ = \nDSthree), and DS4, reviews labelled by Scalabrino et al.~\cite{scalabrino2019} ($n$ = \nDSfour), both mapped by the reference study to the coarse scheme \{bug report, feature request, other\}. Its replication package contains the mapped data, the prompts, the raw model outputs and the scoring code, which lets us separate the models' behaviour from the pipeline's.
+
+\paragraph{LLMs versus fine-tuned models.} Zero-shot LLM classification of user feedback has been compared with fine-tuned transformers several times~\cite{abedini2025,mallya2025}; the comparisons differ in label scheme, prompt and metric, and none of them estimates the ceiling imposed by the labels. Prompt sensitivity~\cite{sclar2024,mizrahi2024} and the gap between generated and scored labels~\cite{holtzman2021} are known in NLP but are rarely carried into software-engineering evaluations.
+
+\paragraph{Label noise and ceilings.} Label errors are pervasive in benchmark test sets and can change model rankings~\cite{northcutt2021}; pre-trained models' disagreements with gold are a productive way to find them~\cite{chong2022,klie2023}, and recent work shows that LLMs' measured scores rise when test-set errors are corrected~\cite{nahum2024}. We adopt the estimation view: rather than cleaning the benchmark, we estimate the error rate with a design-based estimator and report the ceiling it implies.
+
+\paragraph{Contamination.} Public benchmarks may be in a model's pre-training data~\cite{sainz2023,golchin2024}. We include a verbatim-completion probe with a positive control so that a null result is interpretable.
+
+\section{Study Design}
+
+\subsection{Data, metric and the reference pipeline}
+We froze the coarse-scheme evaluation files from the replication package (SHA-256 recorded in a manifest) and recomputed the reference metric: per-class one-vs-rest precision, recall and F1 on one-hot gold, macro-averaged over the three classes. On the reference study's own outputs this reproduces its reported GPT-4o scores to within 0.1 point on all four datasets, so the numbers below are on the published scale. A small number of items carry two gold labels (\multilabelDSthree{} on DS3, \multilabelDSfour{} on DS4); a single-label prediction counts as correct when it is in the gold set. Differences under 2 \fone points were pre-declared practically negligible.
+
+\subsection{Systems}
+\emph{GPT-4o}: the raw outputs shipped in the replication package, parsed with the reference parser (we did not re-query the API). \emph{Qwen3-4B and Qwen3-1.7B}~\cite{qwen3}: instruction-tuned checkpoints run locally in bfloat16 with thinking disabled, under three prompts---P1, byte-identical to the reference prompt; P2 and P3, the same class definitions in two other framings---and two decision rules: \emph{greedy} generation (48 tokens) followed by a parser, or \emph{label scoring}, the length-normalised log-probability of each verbaliser. Our \emph{strict} parser accepts the first whole-word class mention and flags multi-class outputs; the \emph{reference} parser matches substrings and maps unparseable output to \emph{other}. \emph{DistilBERT}~\cite{sanh2019}: the reference recipe re-implemented---one binary head per class, stratified 5-fold cross-validation, balanced class weights, Adam at $5\times10^{-5}$, batch 16, 3 epochs, 50 tokens---with three training seeds and out-of-fold predictions for every item; we score it in the one-vs-rest view with and without attention masks at inference, and in the single-label argmax view. The pre-registered primary configuration is P2 with greedy decoding and the strict parser.
+
+\subsection{Measurement choices}
+We define the swing of a choice as the largest difference in \fone it produces for one model on one dataset: A1 parser (reference vs.\ strict, greedy mode), A2 prompt (P1--P3 range, per decision rule), A3 decision rule (greedy vs.\ scoring, per prompt), A4 metric view (argmax vs.\ one-vs-rest with and without masks, DistilBERT). We report the swings next to the model gaps under the primary configuration.
+
+\subsection{Convergence}
+For each pair of systems we compute the Jaccard overlap of their error sets and compare it with a permutation null that shuffles one system's error indicator over items (10{,}000 draws), Holm-corrected over the three pairs per dataset at $\alpha$ = 0.01 (H2). Systems are $f_1$ = DistilBERT (seed 1, argmax), $f_2$ = Qwen3-4B (primary configuration) and $f_3$ = GPT-4o.
+
+\subsection{Strata, sample and annotation}
+Items were stratified by the three systems' behaviour: $h_1$, all three agree with gold; $h_2$, all three output the same single label and it is not in gold; $h_3$, everything else. Stratum sizes are exact (DS3: \strataHoneDSthree{} / \strataHtwoDSthree{} / \strataHthreeDSthree; DS4: \strataHoneDSfour{} / \strataHtwoDSfour{} / \strataHthreeDSfour). We drew 100 items per stratum and dataset (a stratum taken whole when smaller; seed fixed in the pre-registration), assigned opaque item keys, and produced two queues in different seeded orders containing only the review text. Two authors labelled their queues independently, blind to gold, model outputs and strata, with the P1 class definitions as the only guideline, after a dry run on 20 items from another dataset. Disagreements were reconciled once, with the guidelines open and still blind. A script then assigned each item a status: \emph{gold correct}, \emph{gold wrong} (both annotators agree on one other label after reconciliation) or \emph{contested} (still disagree, or both flag two intents). Agreement is reported before and after reconciliation.
+
+\subsection{Estimators}
+The population error rate is the stratified estimate $\hat\eps = \sum_h W_h\, m_h/n_h$ with finite-population variance and per-stratum Clopper--Pearson intervals; $\hat\eps$ counts \emph{gold wrong} only, and we also report the value if every contested item were an error. The \emph{noise ceiling} is the \fone that the adjudicated labels receive when scored against the original gold with stratum weights $N_h/n_h$, with a stratified bootstrap interval; contested items keep the original gold. Attribution uses the risk ratio $\mathrm{RR} = P(\text{flagged}\mid\text{error})/P(\text{flagged})$ of a system's errors on wrong-or-contested items, with a log-normal interval and Fisher's exact test, Holm-corrected over the three systems. Parity is tested with a paired bootstrap ($B$ = 2{,}000) and an exact McNemar test on the same rows.
+
+\subsection{Shift and contamination}
+For cross-dataset shift, DistilBERT is trained on all of one dataset and tested on all of the other, three seeds per direction; the zero-shot systems need no training set, so their scores are unchanged by construction. For contamination, each Qwen3 \emph{base} checkpoint (before instruction tuning) receives the first 12 tokens of every review of at least 22 tokens and greedily generates 10; an item is flagged when at least 8 of the 10 match the true continuation. Ten public-domain passages serve as a positive control. The pre-registered concern threshold is 2\% of eligible items.
+
+\subsection{Pre-registration}
+Five hypotheses with decision rules were frozen under a git tag before the sample was drawn: H1, with one baseline recipe, parser and prompt the GPT-4o--DistilBERT gap is below 2 points in the one-vs-rest view; H2, pairwise error overlap exceeds the permutation null; H3, $\hat\eps \ge 8\%$ on DS3 and the systems' common score lies inside the ceiling interval (refuted if $\hat\eps < 4\%$ with upper bound below 8\%; indeterminate otherwise); H4, each system's errors are at least $3\times$ enriched on wrong-or-contested items with an interval excluding 1; H5, cross-dataset transfer drops \fone by at least 10 points. All tables in this paper are regenerated by one command from the frozen data and the stored predictions.
+
+\section{Results}
+
+\begin{table*}[t]
+\caption{\fone of the three system families under one metric, one prompt and one parser, with 95\% paired-bootstrap intervals and Cohen's $\kappa$ against GPT-4o on the same rows. DistilBERT rows are mean $\pm$ s.d.\ over three seeds of out-of-fold predictions.}
+\label{tab:main}
+\centering\small
+\input{tables/tab_main}
+\end{table*}
+
+\subsection{Same pipeline, same score (H1)}
+Table~\ref{tab:main} gives the main comparison. GPT-4o scores \gptFoneDSthree{} and \gptFoneDSfour{} \fone on DS3 and DS4; Qwen3-4B under the primary configuration scores \qFourFDSthree{} and \qFourFDSfour{} (ratio to GPT-4o \qFourRatioDSthree{} and \qFourRatioDSfour; McNemar $p$ = \qFourMcNemarDSthree{} and \qFourMcNemarDSfour). DistilBERT in the single-label view scores \dbArgDSthree{} $\pm$ \dbArgSdDSthree{} and \dbArgDSfour{} $\pm$ \dbArgSdDSfour; in the one-vs-rest view of the reference recipe it scores \dbMaskDSthree{} and \dbMaskDSfour, so the GPT-4o--DistilBERT gap of H1 is \gapDbMaskDSthree{} and \gapDbMaskDSfour{} points: H1 is supported. The reference study's reported gap of roughly 18 points on DS3 was measured under its original fine-grained scheme and a baseline whose inference discards attention masks; under the coarse scheme with the same recipe, the encoder is within noise of the strongest LLM. The 1.7B model is the exception: it trails GPT-4o by \gapQseventeenDSthree{} and \gapQseventeenDSfour{} points, a gap that no measurement choice closes.
+
+\subsection{Measurement moves scores more than models do}
+\begin{table}[t]
+\caption{Largest \fone swing produced by each measurement choice for one model on one dataset, next to the model gaps under the pre-registered configuration. Swings above 2 points exceed the pre-declared negligibility band.}
+\label{tab:artifacts}
+\centering\small
+\input{tables/tab_artifacts}
+\end{table}
+Table~\ref{tab:artifacts} decomposes the pipeline. Prompt wording moves Qwen3-4B by \artPromptGDSthree{} (greedy) and \artPromptSDSthree{} (scoring) points on DS3 and \artPromptGDSfour{}/\artPromptSDSfour{} on DS4; the decision rule by \artRuleDSthree{} and \artRuleDSfour; the metric view moves DistilBERT by \artMetricDSthree{} and \artMetricDSfour. The parser swing (\artParserDSthree{} and \artParserDSfour) appears only under P1, the prompt whose output format the reference parser was written for; under P2 and P3 the two parsers agree exactly. Training-seed variation is \seedSdDSthree{} and \seedSdDSfour{} points, so the swings are not seed noise. Against these, the GPT-4o--Qwen3-4B gap is \gapQfourDSthree{} and \gapQfourDSfour{}, and GPT-4o--DistilBERT is \gapDbDSthree{} and \gapDbDSfour: every choice except the parser moves a single system by more than the strongest systems differ. A ranking of these three systems is therefore a property of the pipeline, not of the models, unless the pipeline is held fixed and reported.
+
+\subsection{Shared errors (H2)}
+\begin{table}[t]
+\caption{Error overlap between systems (DB = DistilBERT, Q4B = Qwen3-4B): observed Jaccard, permutation null (10{,}000 draws), shared errors observed / expected under independence, and Holm-corrected $p$.}
+\label{tab:overlap}
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\input{tables/tab_overlap}
+\end{table}
+If the three systems were converging on a label-set ceiling rather than on a shared competence, their errors should fall on the same items. They do (Table~\ref{tab:overlap}): Jaccard overlap is \jMinDSthree--\jMaxDSthree{} on DS3 and \jMinDSfour--\jMaxDSfour{} on DS4 against \jNullDSthree{} and \jNullDSfour{} under independence, with Holm-corrected $p$ = \overlapHolmP{} for every pair; H2 is supported. The two LLMs overlap more with each other than either does with the encoder, which is what shared pre-training and a shared decision procedure predict; the encoder--LLM overlap is the more telling number, because the systems have nothing in common but the task and the labels.
+
+\subsection{The noise ceiling (H3) and where the errors sit (H4)}
+\begin{table}[t]
+\caption{Blind stratified re-annotation: agreement, estimated gold-label error rate, the ceiling it implies, and the enrichment of each system's errors on items whose gold label is wrong or contested.}
+\label{tab:noise}
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\input{tables/tab_noise}
+\end{table}
+Table~\ref{tab:noise} reports the re-annotation. Annotator agreement before reconciliation was $\kappa$ = \kappaBeforeDSthree{} (DS3) and \kappaBeforeDSfour{} (DS4). The stratified estimate of the gold-label error rate is \epsDSthree\% [\epsLoDSthree, \epsHiDSthree] on DS3 and \epsDSfour\% [\epsLoDSfour, \epsHiDSfour] on DS4, and the ceiling---the \fone a classifier that agreed with the adjudicated labels on every item would receive---is \ceilingDSthree{} [\ceilingLoDSthree, \ceilingHiDSthree] and \ceilingDSfour{} [\ceilingLoDSfour, \ceilingHiDSfour]. By the pre-registered rule H3 is \hThreeVerdictDSthree{} on DS3. The enrichment of each system's errors on wrong-or-contested items is \rrFoneDSthree{} for DistilBERT, \rrFtwoDSthree{} for Qwen3-4B and \rrFthreeDSthree{} for GPT-4o on DS3 (H4: \hFourVerdictFoneDSthree, \hFourVerdictFtwoDSthree, \hFourVerdictFthreeDSthree), with DS4 in the table.
+
+\subsection{What survives: shift (H5)}
+\begin{table}[t]
+\caption{Cross-dataset transfer of DistilBERT (mean $\pm$ s.d.\ over three seeds, single-label view), the drop from its in-domain out-of-fold score on the same test set (Table~\ref{tab:main}), GPT-4o on the same rows, and per-class F1 after transfer.}
+\label{tab:transfer}
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/tab_transfer}
+\end{table}
+In-domain parity does not survive a change of benchmark (Table~\ref{tab:transfer}). Trained on DS3 and tested on DS4, DistilBERT scores \transferDSthreeToDSfour{} $\pm$ \transferSdDSthreeToDSfour, a drop of \dropDSthreeToDSfour{} points from its in-domain score and \belowGptDSthreeToDSfour{} below GPT-4o on the same rows; in the other direction the drop is \dropDSfourToDSthree{} points (seeds \dropMinDSfourToDSthree--\dropMaxDSfourToDSthree) and the shortfall \belowGptDSfourToDSthree. The pre-registered threshold of 10 points is met for DS4$\rightarrow$DS3 and not for DS3$\rightarrow$DS4, so H5 is met in one direction; the finding we did not pre-register but report as exploratory is the direction-independent one---after transfer the encoder trails every zero-shot system, and \emph{feature request} is the class that collapses. This is the mirror image of the convergence result: in-domain, the fine-tuned model learns the dataset's labelling convention, errors included, and is scored by it.
+
+\subsection{Contamination}
+Qwen3-4B-Base reproduces \contamControlQfourBase{} control passages verbatim but \contamFlaggedQfourBaseDSthree{} of \contamEligQfourBaseDSthree{} eligible DS3 reviews and \contamFlaggedQfourBaseDSfour{} of \contamEligQfourBaseDSfour{} DS4 reviews (upper 95\% bounds \contamUpperQfourBaseDSthree\% and \contamUpperQfourBaseDSfour\%, against a 2\% threshold); the 1.7B base model behaves the same (\contamControlQseventeenBase{} controls, \contamFlaggedQseventeenBaseDSthree{} and \contamFlaggedQseventeenBaseDSfour{} flagged). The flagged items are formulaic clauses completed by language modelling, not recalled reviews. Instruction tuning suppresses verbatim recall (controls \contamControlQfourInstruct{} and \contamControlQseventeenInstruct), which is why the base checkpoints are the informative probe. Only \eligShareDSthree\% and \eligShareDSfour\% of reviews are long enough to probe; the claim is no evidence of verbatim memorisation, not absence of exposure.
+
+\section{Threats to Validity}
+\emph{Construct.} We study the coarse three-class scheme the reference study introduced; finer schemes may behave differently, and a single-label annotation cannot fully adjudicate multi-label gold (\multilabelDSthree{} items on DS3). The ceiling we report is the one a single-label classifier faces under the published metric. \emph{Internal.} The annotators are authors; blinding to gold, outputs and strata, opaque item keys and a mechanical status assignment are the controls, and reconciliation happened once, before any status was computed. A sample of 100 per stratum bounds $\hat\eps$ to a few points; the intervals carry that uncertainty. Contested items are counted neither as errors nor as corrections, and the bounds under the opposite assumption are reported. \emph{External.} Two datasets, English reviews, two open-weight sizes and one proprietary model, whose outputs we took from the replication package rather than re-querying; the 1.7B result shows that parity is not a property of small models in general. \emph{Statistical.} Intervals are bootstrap or exact; multiple comparisons within a hypothesis are Holm-corrected; the pre-registration fixed every rule before the annotation data existed, and the one rule met only in part (H5) is reported as such.
+
+\section{Conclusion}
+On two standard app-review benchmarks, the measured advantage of GPT-4o over a 4B open-weight model and over a fine-tuned DistilBERT is smaller than the effect of choosing a parser, a prompt, a decision rule or a metric view, and the three systems err on the same items at rates that a shared label-set ceiling predicts. A blind re-annotation estimates that ceiling at \ceilingDSthree{} \fone on DS3 (H3: \hThreeVerdictDSthree). The advantage that is real appears under distribution shift and below 2B parameters. For evaluations of this kind we recommend three practices that cost little: report the full measurement pipeline and the swing of each choice, test error overlap before interpreting a ranking, and estimate the label-error ceiling before claiming that a model has approached it. The anonymised repository with code, frozen data, predictions, pre-registration and annotations accompanies the submission.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,16 @@
+\begin{tabular}{@{}p{5.4cm}rr@{}}
+\toprule
+Measurement choice (same model, same data) & DS3 & DS4 \\
+\midrule
+A1 parser (reference substring vs.\ strict first-mention), Qwen3-4B & 1.6 & 1.8 \\
+A2 prompt wording (P1--P3), Qwen3-4B, greedy & 3.3 & 3.1 \\
+A2 prompt wording (P1--P3), Qwen3-4B, label scoring & 5.4 & 4.3 \\
+A3 decision rule (greedy vs.\ label scoring), Qwen3-4B & 4.9 & 1.4 \\
+A4 metric view (argmax vs.\ OVR mask vs.\ OVR no-mask), DistilBERT & 3.9 & 3.1 \\
+Training seed (s.d.\ over 3 seeds), DistilBERT & 0.1 & 0.4 \\
+\midrule
+GPT-4o $-$ Qwen3-4B (pre-registered P2, greedy) & 0.1 & 0.2 \\
+GPT-4o $-$ DistilBERT argmax & -0.2 & 0.4 \\
+GPT-4o $-$ Qwen3-1.7B (P2, greedy) & 10.7 & 8.0 \\
+\bottomrule
+\end{tabular}
