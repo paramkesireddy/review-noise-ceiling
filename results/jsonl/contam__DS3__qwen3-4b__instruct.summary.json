@@ -1,0 +1,34 @@
+{
+  "run_id": "contam__DS3__qwen3-4b__instruct",
+  "model": "qwen3-4b",
+  "variant": "instruct",
+  "hf": "Qwen/Qwen3-4B",
+  "dataset": "DS3",
+  "n_total": 3214,
+  "n_eligible": 1565,
+  "eligible_share": 0.487,
+  "flagged": 0,
+  "flagged_rate": 0.0,
+  "ci95": [
+    0.0,
+    0.24
+  ],
+  "exceeds_threshold": false,
+  "mean_matches": 0.5,
+  "match_hist": {
+    "0": 1001,
+    "1": 409,
+    "2": 109,
+    "3": 33,
+    "4": 9,
+    "5": 3,
+    "6": 1
+  },
+  "prefix": 12,
+  "cont": 10,
+  "flag_at": 8,
+  "threshold_pct": 2.0,
+  "wall_s": 14.1,
+  "git_commit": "c10c6d5",
+  "finished_utc": "2026-10-25T02:26:36+00:00"
+}

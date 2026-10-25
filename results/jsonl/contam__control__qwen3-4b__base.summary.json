@@ -1,0 +1,25 @@
+{
+  "run_id": "contam__control__qwen3-4b__base",
+  "model": "qwen3-4b",
+  "variant": "base",
+  "hf": "Qwen/Qwen3-4B-Base",
+  "dataset": "control",
+  "n_total": 10,
+  "n_eligible": 10,
+  "eligible_share": 1.0,
+  "flagged": 10,
+  "flagged_rate": 100.0,
+  "ci95": [
+    69.15,
+    100.0
+  ],
+  "exceeds_threshold": true,
+  "mean_matches": 10.0,
+  "match_hist": {
+    "10": 10
+  },
+  "prefix": 12,
+  "cont": 10,
+  "flag_at": 8,
+  "threshold_pct": 2.0
+}

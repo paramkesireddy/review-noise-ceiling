@@ -1,0 +1,35 @@
+{
+  "run_id": "contam__DS4__qwen3-1.7b__base",
+  "model": "qwen3-1.7b",
+  "variant": "base",
+  "hf": "Qwen/Qwen3-1.7B-Base",
+  "dataset": "DS4",
+  "n_total": 3081,
+  "n_eligible": 1430,
+  "eligible_share": 0.464,
+  "flagged": 2,
+  "flagged_rate": 0.14,
+  "ci95": [
+    0.02,
+    0.5
+  ],
+  "exceeds_threshold": false,
+  "mean_matches": 0.57,
+  "match_hist": {
+    "0": 879,
+    "1": 383,
+    "2": 112,
+    "3": 33,
+    "4": 14,
+    "5": 2,
+    "6": 5,
+    "8": 2
+  },
+  "prefix": 12,
+  "cont": 10,
+  "flag_at": 8,
+  "threshold_pct": 2.0,
+  "wall_s": 10.4,
+  "git_commit": "c10c6d5",
+  "finished_utc": "2026-10-25T02:26:16+00:00"
+}

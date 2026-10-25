@@ -1,0 +1,30 @@
+{
+  "run_id": "contam__control__qwen3-1.7b__instruct",
+  "model": "qwen3-1.7b",
+  "variant": "instruct",
+  "hf": "Qwen/Qwen3-1.7B",
+  "dataset": "control",
+  "n_total": 10,
+  "n_eligible": 10,
+  "eligible_share": 1.0,
+  "flagged": 3,
+  "flagged_rate": 30.0,
+  "ci95": [
+    6.67,
+    65.25
+  ],
+  "exceeds_threshold": true,
+  "mean_matches": 4.7,
+  "match_hist": {
+    "0": 2,
+    "1": 2,
+    "2": 1,
+    "6": 1,
+    "7": 1,
+    "10": 3
+  },
+  "prefix": 12,
+  "cont": 10,
+  "flag_at": 8,
+  "threshold_pct": 2.0
+}

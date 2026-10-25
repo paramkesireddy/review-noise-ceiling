@@ -1,0 +1,28 @@
+{
+  "run_id": "contam__control__qwen3-1.7b__base",
+  "model": "qwen3-1.7b",
+  "variant": "base",
+  "hf": "Qwen/Qwen3-1.7B-Base",
+  "dataset": "control",
+  "n_total": 10,
+  "n_eligible": 10,
+  "eligible_share": 1.0,
+  "flagged": 7,
+  "flagged_rate": 70.0,
+  "ci95": [
+    34.75,
+    93.33
+  ],
+  "exceeds_threshold": true,
+  "mean_matches": 7.5,
+  "match_hist": {
+    "0": 1,
+    "1": 1,
+    "4": 1,
+    "10": 7
+  },
+  "prefix": 12,
+  "cont": 10,
+  "flag_at": 8,
+  "threshold_pct": 2.0
+}
